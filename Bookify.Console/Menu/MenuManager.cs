@@ -14,18 +14,21 @@ namespace Bookify.Console.Menu
 
         public async Task RunAsync()
         {
-            while (true)
-            {
-                var choice = await ShowMainMenuAsync();
+            bool exitRequested = false;
 
-                if (choice == "1")
+            var mainMenuOptions = new Dictionary<string, (string Description, Func<Task<bool>> Action)>
+            {
+                { "1", ("Select User", async () => { await HandleSelectUserAsync(); System.Console.Clear(); return false; }) },
+                { "2", ("Exit", async () => { System.Console.WriteLine("Exiting application..."); return true; }) }
+            };
+
+            while (!exitRequested)
+            {
+                var choice = DisplayMenu("BOOKIFY - MAIN MENU", mainMenuOptions);
+                
+                if (mainMenuOptions.ContainsKey(choice))
                 {
-                    await HandleSelectUserAsync();
-                }
-                else if (choice == "2")
-                {
-                    System.Console.WriteLine("Exiting application...");
-                    break;
+                    exitRequested = await mainMenuOptions[choice].Action();
                 }
                 else
                 {
@@ -34,18 +37,23 @@ namespace Bookify.Console.Menu
             }
         }
 
-        private async Task<string> ShowMainMenuAsync()
+        private string DisplayMenu(string title, Dictionary<string, (string Description, Func<Task<bool>> Action)> options)
         {
             System.Console.WriteLine();
-            System.Console.WriteLine("=== BOOKIFY - MAIN MENU ===");
-            System.Console.WriteLine("1. Select User");
-            System.Console.WriteLine("2. Exit");
+            System.Console.WriteLine($"=== {title} ===");
+            
+            foreach (var option in options)
+            {
+                System.Console.WriteLine($"{option.Key}. {option.Value.Description}");
+            }
+            
             System.Console.Write("Select an option: ");
             return System.Console.ReadLine() ?? "";
         }
 
         private async Task HandleSelectUserAsync()
         {
+            System.Console.Clear();
             System.Console.WriteLine();
             System.Console.WriteLine("=== AVAILABLE USERS ===");
 
@@ -93,22 +101,22 @@ namespace Bookify.Console.Menu
 
         private async Task ShowUserMenuAsync(User user)
         {
-            while (true)
-            {
-                System.Console.WriteLine();
-                System.Console.WriteLine($"=== USER MENU: {user.Name} (ID: {user.Id}) ===");
-                System.Console.WriteLine("1. List User Books");
-                System.Console.WriteLine("2. Go Back to Main Menu");
-                System.Console.Write("Select an option: ");
-                var choice = System.Console.ReadLine();
+            bool goBack = false;
 
-                if (choice == "1")
+            var userMenuOptions = new Dictionary<string, (string Description, Func<Task<bool>> Action)>
+            {
+                { "1", ("List User Books", async () => { await ShowUserBooksAsync(user.Id, user.Name); System.Console.Clear(); return false; }) },
+                { "2", ("Go Back to Main Menu", async () => { return true; }) }
+            };
+
+            while (!goBack)
+            {
+                System.Console.Clear();
+                var choice = DisplayMenu($"USER MENU: {user.Name} (ID: {user.Id})", userMenuOptions);
+                
+                if (userMenuOptions.ContainsKey(choice))
                 {
-                    await ShowUserBooksAsync(user.Id, user.Name);
-                }
-                else if (choice == "2")
-                {
-                    break;
+                    goBack = await userMenuOptions[choice].Action();
                 }
                 else
                 {
@@ -119,6 +127,7 @@ namespace Bookify.Console.Menu
 
         private async Task ShowUserBooksAsync(int userId, string userName)
         {
+            System.Console.Clear();
             System.Console.WriteLine();
             System.Console.WriteLine($"=== BOOKS FOR {userName.ToUpper()} ===");
             System.Console.WriteLine();
