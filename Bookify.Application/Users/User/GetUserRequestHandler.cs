@@ -10,7 +10,7 @@ namespace Bookify.Application.Users.User
     public class GetUserResponse
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string? Name { get; set; }
     }
     public class GetUserRequestHandler : RequestHandler<GetByIdRequest, GetUserResponse>
     {

@@ -1,6 +1,4 @@
-﻿using Bookify.Domain.Abstractions;
-
-namespace Bookify.Domain.Common.Model
+﻿namespace Bookify.Domain.Common.Model
 {
     public class GetAllResponse<TValue> /*where TValue : Entity*/
     {
@@ -13,7 +11,7 @@ namespace Bookify.Domain.Common.Model
 
         public GetAllResponse()
         {
-            
+            Values = Enumerable.Empty<TValue>();
         }
     }
 }

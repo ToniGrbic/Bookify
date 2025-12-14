@@ -6,7 +6,7 @@ namespace Bookify.Application.Users.User
 {
     public class CreateUserRequest
     {
-        public string Name { get; init; }
+        public required string Name { get; init; }
         public DateOnly? DateOfBirth { get; init; }
     }
 
@@ -22,7 +22,7 @@ namespace Bookify.Application.Users.User
             var user = new Domain.Entities.Users.User
             {
                 Name = request.Name,
-                DateOfBirth = request.DateOfBirth,
+                DateOfBirth = request?.DateOfBirth,
             };
 
             var validationResult = await user.Create(_unitOfWork.Repository);

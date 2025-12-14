@@ -10,7 +10,7 @@ namespace Bookify.Domain.Entities.Users
     {
         public int Id { get; set; }
         public const int NameMaxLength = 50;
-        public string Name { get; set; }
+        public string? Name { get; set; }
         public DateOnly? DateOfBirth { get; set; }
         
         // Navigation property for books

@@ -5,7 +5,7 @@ namespace Bookify.Domain.Entities.Books
     public class Book
     {
         public int Id { get; set; }
-        public string Title { get; set; }
+        public string? Title { get; set; }
         public string? Author { get; set; }
         public string? ISBN { get; set; }
         public DateTime? PublishedDate { get; set; }
@@ -14,6 +14,6 @@ namespace Bookify.Domain.Entities.Books
         public int UserId { get; set; }
         
         // Navigation property
-        public User User { get; set; }
+        public User? User { get; set; }
     }
 }
