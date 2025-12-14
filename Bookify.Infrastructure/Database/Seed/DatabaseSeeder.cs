@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Bookify.Infrastructure.Database.Seed
 {
-    public static class Seed
+    public static class DatabaseSeeder
     {
         public static void SeedData(ModelBuilder modelBuilder)
         {

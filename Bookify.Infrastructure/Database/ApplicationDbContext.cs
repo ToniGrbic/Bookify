@@ -1,6 +1,7 @@
 ﻿using Bookify.Domain.Entities.Books;
 using Bookify.Domain.Entities.Users;
 using Microsoft.EntityFrameworkCore;
+using Bookify.Infrastructure.Database.Seed;
 
 namespace Bookify.Infrastructure.Database
 {
@@ -21,7 +22,7 @@ namespace Bookify.Infrastructure.Database
 
             modelBuilder.HasDefaultSchema(Schemas.Default);
 
-            Seed.Seed.SeedData(modelBuilder);
+            DatabaseSeeder.SeedData(modelBuilder);
         }
     }
 }

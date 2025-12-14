@@ -6,7 +6,7 @@ namespace Bookify.Domain.Persistence.Users
 {
     public interface IUserRepository : IRepository<User, int>
     {
-        Task<User> GetById(int id);
+        Task<User?> GetById(int id);
         Task<IEnumerable<Book>> GetUserBooks(int userId);
     }
 }

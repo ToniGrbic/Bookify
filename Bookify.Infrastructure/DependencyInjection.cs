@@ -33,13 +33,6 @@ namespace Bookify.Infrastructure
                 options.UseNpgsql(connectionString));
 
             services.AddHttpClient();
-
-            services.AddSingleton<IDapperManager>(sp =>
-            {
-                var config = sp.GetRequiredService<IConfiguration>();
-                string cs = config.GetConnectionString("Database")!;
-                return new DapperManager(cs);
-            });
         }
 
         private static void AddRepositories(IServiceCollection services)
