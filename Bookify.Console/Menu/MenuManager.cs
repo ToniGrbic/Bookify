@@ -16,11 +16,7 @@ namespace Bookify.Console.Menu
         {
             bool exitRequested = false;
 
-            var mainMenuOptions = new Dictionary<string, (string Description, Func<Task<bool>> Action)>
-            {
-                { "1", ("Select User", async () => { await HandleSelectUserAsync(); System.Console.Clear(); return false; }) },
-                { "2", ("Exit", async () => { System.Console.WriteLine("Exiting application..."); return true; }) }
-            };
+            var mainMenuOptions = MenuOptions.CreateMainMenuOptions(this);
 
             while (!exitRequested)
             {
@@ -50,7 +46,7 @@ namespace Bookify.Console.Menu
             return System.Console.ReadLine() ?? "";
         }
 
-        private async Task HandleSelectUserAsync()
+        public async Task HandleSelectUserAsync()
         {
             System.Console.Clear();
             System.Console.WriteLine("\n=== AVAILABLE USERS ===\n");
@@ -100,18 +96,7 @@ namespace Bookify.Console.Menu
         {
             bool goBack = false;
 
-            var userMenuOptions = new Dictionary<string, (string Description, Func<Task<bool>> Action)>
-            {
-                { "1", ("List User Books", 
-                async () => { 
-                    await ShowUserBooksAsync(user.Id, user.Name ?? "Unknown User"); 
-                    System.Console.Clear();
-                     
-                    return false; 
-                }) 
-                },
-                { "2", ("Go Back to Main Menu", async () => true) }
-            };
+            var userMenuOptions = MenuOptions.CreateUserMenuOptions(this, user);
 
             while (!goBack)
             {
@@ -129,7 +114,7 @@ namespace Bookify.Console.Menu
             }
         }
 
-        private async Task ShowUserBooksAsync(int userId, string userName)
+        public async Task ShowUserBooksAsync(int userId, string userName)
         {
             System.Console.Clear();
             System.Console.WriteLine($"\n=== BOOKS FOR {userName.ToUpper()} ===\n");
