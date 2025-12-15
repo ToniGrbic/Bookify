@@ -74,7 +74,7 @@ namespace Bookify.Console.Views
             }
         }
 
-        private async Task ShowUserMenuAsync(GetUserResponse user)
+        private async Task ShowUserMenuAsync(UserResponse user)
         {
             bool goBack = false;
 

@@ -30,7 +30,7 @@ namespace Bookify.Console.Views
                 .Build();
         }
 
-        public static Dictionary<string, (string Description, Func<Task<bool>> Action)> CreateUserMenuOptions(MenuManager menuManager, GetUserResponse user)
+        public static Dictionary<string, (string Description, Func<Task<bool>> Action)> CreateUserMenuOptions(MenuManager menuManager, UserResponse user)
         {
             return new MenuOptions()
                 .AddOption("1", "List User Books", async () => 

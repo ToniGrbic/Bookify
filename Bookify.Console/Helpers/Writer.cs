@@ -4,7 +4,7 @@ namespace Bookify.Console.Helpers
 {
     public static class Writer
     {
-        public static void WriteUsers(IEnumerable<GetUserResponse> users)
+        public static void WriteUsers(IEnumerable<UserResponse> users)
         {
             var userList = users.ToList();
             
