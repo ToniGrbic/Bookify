@@ -1,39 +1,43 @@
-using Bookify.Domain.Entities.Books;
-using Bookify.Domain.Entities.Users;
-using Bookify.Domain.Persistence.Users;
+using Bookify.Application.Users.User;
+using Bookify.Application.Common.Model;
 
 namespace Bookify.Console.Services
 {
     public class UserService
     {
-        private readonly IUserUnitOfWork _unitOfWork;
+        private readonly GetAllUsersRequestHandler _getAllUsersHandler;
+        private readonly GetUserRequestHandler _getUserHandler;
+        private readonly GetUserBooksRequestHandler _getUserBooksHandler;
 
-        public UserService(IUserUnitOfWork unitOfWork)
+        public UserService(
+            GetAllUsersRequestHandler getAllUsersHandler,
+            GetUserRequestHandler getUserHandler,
+            GetUserBooksRequestHandler getUserBooksHandler)
         {
-            _unitOfWork = unitOfWork;
+            _getAllUsersHandler = getAllUsersHandler;
+            _getUserHandler = getUserHandler;
+            _getUserBooksHandler = getUserBooksHandler;
         }
 
-        public async Task<IEnumerable<User>> GetAllUsersAsync()
+        public async Task<IEnumerable<GetUserResponse>> GetAllUsersAsync()
         {
-            var result = await _unitOfWork.Repository.Get();
-            return result.Values;
+            var result = await _getAllUsersHandler.ProcessAuthorizedRequestAsync(new GetAllRequest());
+
+            return result.Value?.Values ?? [];
         }
 
-        public async Task<User?> GetUserByIdAsync(int userId)
+        public async Task<GetUserResponse?> GetUserByIdAsync(int userId)
         {
-            try
-            {
-                return await _unitOfWork.Repository.GetById(userId);
-            }
-            catch
-            {
-                return null;
-            }
+            var result = await _getUserHandler.ProcessAuthorizedRequestAsync(new GetByIdRequest(userId));
+
+            return result.Value;
         }
 
-        public async Task<IEnumerable<Book>> GetUserBooksAsync(int userId)
+        public async Task<IEnumerable<BookResponse>> GetUserBooksAsync(int userId)
         {
-            return await _unitOfWork.Repository.GetUserBooks(userId);
+            var result = await _getUserBooksHandler.ProcessAuthorizedRequestAsync(new GetUserBooksRequest(userId));
+
+            return result.Value?.Values ?? [];
         }
     }
 }

@@ -1,8 +1,8 @@
+using Bookify.Application.Users.User;
 using Bookify.Console.Helpers;
 using Bookify.Console.Services;
-using Bookify.Domain.Entities.Users;
 
-namespace Bookify.Console.Menu
+namespace Bookify.Console.Views
 {
     public class MenuManager
     {
@@ -74,7 +74,7 @@ namespace Bookify.Console.Menu
             }
         }
 
-        private async Task ShowUserMenuAsync(User user)
+        private async Task ShowUserMenuAsync(GetUserResponse user)
         {
             bool goBack = false;
 

@@ -1,11 +1,10 @@
-using Bookify.Domain.Entities.Books;
-using Bookify.Domain.Entities.Users;
+using Bookify.Application.Users.User;
 
 namespace Bookify.Console.Helpers
 {
     public static class Writer
     {
-        public static void WriteUsers(IEnumerable<User> users)
+        public static void WriteUsers(IEnumerable<GetUserResponse> users)
         {
             var userList = users.ToList();
             
@@ -21,7 +20,7 @@ namespace Bookify.Console.Helpers
             }
         }
 
-        public static void WriteBooks(IEnumerable<Book> books, string userName = "")
+        public static void WriteBooks(IEnumerable<BookResponse> books, string userName = "")
         {
             var bookList = books.ToList();
 

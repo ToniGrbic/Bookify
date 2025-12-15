@@ -1,6 +1,6 @@
-using Bookify.Domain.Entities.Users;
+using Bookify.Application.Users.User;
 
-namespace Bookify.Console.Menu
+namespace Bookify.Console.Views
 {
     public class MenuOptions
     {
@@ -8,7 +8,7 @@ namespace Bookify.Console.Menu
 
         public MenuOptions()
         {
-            _options = new Dictionary<string, (string Description, Func<Task<bool>> Action)>();
+            _options = [];
         }
 
         public MenuOptions AddOption(string key, string description, Func<Task<bool>> action)
@@ -30,7 +30,7 @@ namespace Bookify.Console.Menu
                 .Build();
         }
 
-        public static Dictionary<string, (string Description, Func<Task<bool>> Action)> CreateUserMenuOptions(MenuManager menuManager, User user)
+        public static Dictionary<string, (string Description, Func<Task<bool>> Action)> CreateUserMenuOptions(MenuManager menuManager, GetUserResponse user)
         {
             return new MenuOptions()
                 .AddOption("1", "List User Books", async () => 

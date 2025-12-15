@@ -1,6 +1,6 @@
-﻿namespace Bookify.Domain.Common.Model
+namespace Bookify.Domain.Common.Model
 {
-    public class GetAllResponse<TValue> /*where TValue : Entity*/
+    public class GetAllResponse<TValue>
     {
         public IEnumerable<TValue> Values { get; init; }
 

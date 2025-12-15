@@ -1,5 +1,4 @@
 ﻿using Bookify.Application.Common.Model;
-using Bookify.Domain.Common.Model;
 using Bookify.Domain.Persistence.Users;
 using System;
 using System.Collections.Generic;
@@ -24,7 +23,6 @@ namespace Bookify.Application.Users.User
             GetByIdRequest request,
             Common.Model.Result<GetUserResponse> result)
         {
-            var repository = _unitOfWork.Repository;
             var sqlResult = await _unitOfWork.Repository.GetById(request.Id);
 
             if (sqlResult == null)

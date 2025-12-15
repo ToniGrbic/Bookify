@@ -1,4 +1,5 @@
-﻿using Bookify.Infrastructure.Database;
+﻿using Bookify.Application.Users.User;
+using Bookify.Infrastructure.Database;
 using Bookify.Domain.Persistence.Users;
 using Bookify.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +17,7 @@ namespace Bookify.Infrastructure
         {
             AddDatabase(services, configuration);
             AddRepositories(services);
+            AddRequestHandlers(services);
 
             return services;
         }
@@ -38,6 +40,13 @@ namespace Bookify.Infrastructure
         {
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserUnitOfWork, UserUnitOfWork>();
+        }
+
+        private static void AddRequestHandlers(IServiceCollection services)
+        {
+            services.AddScoped<GetAllUsersRequestHandler>();
+            services.AddScoped<GetUserRequestHandler>();
+            services.AddScoped<GetUserBooksRequestHandler>();
         }
     }
 }

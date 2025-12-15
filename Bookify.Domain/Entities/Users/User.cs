@@ -13,7 +13,7 @@ namespace Bookify.Domain.Entities.Users
         public DateOnly? DateOfBirth { get; set; }
         
         // Navigation property for books
-        public ICollection<Books.Book> Books { get; set; } = new List<Books.Book>();
+        public ICollection<Books.Book> Books { get; set; } = [];
 
         public async Task<Result<int?>> Create(IUserRepository userRepository)
         {

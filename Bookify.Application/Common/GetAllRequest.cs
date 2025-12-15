@@ -1,4 +1,4 @@
-﻿namespace Bookify.Domain.Common.Model
+namespace Bookify.Application.Common.Model
 {
     public class GetAllRequest
     {
